@@ -80,4 +80,16 @@ resource "aws_instance" "wordpress-server" {
       private_key = file("wordpress-ec2.pem")
     }   
   }
+  provisioner "file" {
+    source = "./setup_database.sql"
+    destination = "/home/ubuntu/setup_database.sql"
+
+    connection {
+      type = "ssh"
+      user = "ubuntu"
+      host = self.public_ip
+      private_key = file("wordpress-ec2.pem")
+    }
+    
+  }
 }
